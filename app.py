@@ -2,22 +2,13 @@ from flask import Flask, request, Blueprint, request
 from flask_mysqldb import MySQL
 from flask import jsonify
 
-# from routes import *
+
 import yaml
 import MySQLdb
 import collections
 import json
 app = Flask(__name__)
 
-
-# from routes import doctors
-# import routes.doctors.py
-
-
-# from routes import routes as review_blueprint
-
-# app.register_blueprint(doctor_routes, url_prefix="/doctors")
-# app.register_blueprint(review_routes, url_prefix="/reviews")
 
 
 db = yaml.load(open('db.yaml'))
@@ -44,7 +35,7 @@ def users():
 
 	
 
-@app.route("/doctors/", methods = ['GET', 'POST', 'PATCH', 'DELETE'])
+@app.route("/doctors", methods = ['GET', 'POST', 'PATCH', 'DELETE'])
 
 def getAllDoctors():
 	#GET
@@ -80,7 +71,7 @@ def getAllDoctors():
 		return returnStatement
 
 
-@app.route("/doctors/<id>/", methods = ['GET', 'POST', 'PATCH', 'DELETE'] )
+@app.route("/doctors/<id>", methods = ['GET', 'POST', 'PATCH', 'DELETE'] )
 def getDoctorByID(id):
 	
 	if request.method == 'GET': 
@@ -117,7 +108,7 @@ def getDoctorByID(id):
 	   return "DELETED\n"
    
 
-@app.route("/doctors/<id>/reviews/", methods = ['GET', 'POST', 'PATCH', 'DELETE'] )
+@app.route("/doctors/<id>/reviews", methods = ['GET', 'POST', 'PATCH', 'DELETE'] )
 def addReview(id):
 	if request.method == 'POST':
 		review_data = request.get_json(force=True) 
@@ -129,7 +120,7 @@ def addReview(id):
 		return returnStatement
 	return "No valid request"
 	
-@app.route("/reviews/")
+@app.route("/reviews")
 
 def getAllReviews():
     cur = mysql.connection.cursor()
@@ -154,7 +145,7 @@ def getAllReviews():
 
 
 
-@app.route("/doctors/<id>/reviews/<review_id>/", methods = ['GET', 'POST', 'PATCH', 'DELETE'] )
+@app.route("/doctors/<id>/reviews/<review_id>", methods = ['GET', 'POST', 'PATCH', 'DELETE'] )
 def getReviewByDoctorID(id, review_id):
 	
 	if request.method == 'GET':
@@ -187,7 +178,7 @@ def getReviewByDoctorID(id, review_id):
 
 
 
-@app.route("/reviews/<id>/", methods = ['GET', 'POST', 'PATCH', 'DELETE'])
+@app.route("/reviews/<id>", methods = ['GET', 'POST', 'PATCH', 'DELETE'])
 def getReviewByID(id):
 	
 	if request.method == 'GET':
