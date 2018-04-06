@@ -23,7 +23,7 @@
 
 > #### Configure db.yaml file
 > 	* Fill out fields
-> 	* replace ``"mysql_host"`` with "localhost" and ``"mysql_user"`` with your username to test locally <br/>
+> 	* replace ``"mysql_host"`` with "localhost" and ``"mysql_user"`` with your username. <br/>
 
 
 
@@ -47,9 +47,9 @@
 
 ### Scalability issues
 >	* Implement caching using Redis. <br />
->	* Index the database <br />
->	* Display the deleted data after it's been deleted.  <br />
->	* Implement an UPDATE request. <br />
+>	* Index the database. <br />
+
+
 
 
 
