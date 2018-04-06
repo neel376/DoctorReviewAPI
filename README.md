@@ -39,9 +39,18 @@
 ## The API
 
 ### Design Considerations
-> #### Get and run MySQL
->	* [Download here](https://dev.mysql.com/downloads/) <br />
->.  * Or run ```brew install mysql```
->	* Run the MySQL server <br />
+>	* Separate queries into a file for doctors and a file for doctor reviews. <br />
+>	* Use less SQL calls by using more JOIN clauses. <br />
+>	* Display the deleted data after it's been deleted.  <br />
+>	* Implement an UPDATE request. <br />
+>	* Create automated unit testing. <br />
+
+### Scalability issues
+>	* Implement caching using Redis. <br />
+>	* Index the database <br />
+>	* Display the deleted data after it's been deleted.  <br />
+>	* Implement an UPDATE request. <br />
+
+
 
 
