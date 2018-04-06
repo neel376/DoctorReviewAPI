@@ -7,8 +7,8 @@
 ## Table of Contents:
 * [Getting Setup](#setup)
 * [Comments](#Comments) <br />
-	* [Design Considerations](#design)
-    *
+	* [Design Considerations](#design-considerations)
+    * [Scalibilty Issues](#scalability-issues)
 
 <a name="setup" />
 
