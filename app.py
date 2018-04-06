@@ -27,9 +27,6 @@ app.config['MYSQL_DB'] = db['mysql_db']
 
 mysql = MySQL(app)
 
-
-# app.register_blueprint(routes)
-
 @app.route("/doctors")
 
 def users():
@@ -50,6 +47,7 @@ def users():
 @app.route("/doctors/", methods = ['GET', 'POST', 'PATCH', 'DELETE'])
 
 def getAllDoctors():
+	#GET
 
 	if request.method == 'GET': 
 	    cur = mysql.connection.cursor()
@@ -70,15 +68,67 @@ def getAllDoctors():
 	    	items.append({'reviews': rev})
 	    return jsonify(items)
 
-	# if request.method == 'DELETE':
-	#    cur = mysql.connection.cursor()
-	#    cur.execute('''DELETE FROM doctor''')
-	#    doctors = cur.fetchall()
-	#    return doctors
+	#POST
+
+	if request.method == 'POST':
+		doctor_data = request.get_json(force=True) 
+		cur = mysql.connection.cursor()	
+		name = doctor_data["doctor"]["name"]
+		cur.execute('''INSERT INTO doctor (name) VALUES (%s)''', (name,))
+		mysql.connection.commit()
+		returnStatement = "ADDED DOCTOR: " + name + "\n"
+		return returnStatement
 
 
-	# elif request.method == 'DELETE': 
+@app.route("/doctors/<id>/", methods = ['GET', 'POST', 'PATCH', 'DELETE'] )
+def getDoctorByID(id):
+	
+	if request.method == 'GET': 
+	   cur = mysql.connection.cursor()
+	   cur.execute('''SELECT * FROM doctor WHERE id = %s''', id)
+	   doctor = cur.fetchall()
 
+	   cur.execute('''SELECT * FROM review WHERE doctor_id = %s''', id)
+	   reviews = cur.fetchall();
+	   reviewList = []
+	   doctorData = []
+
+	   for row in reviews :
+	   		d = collections.OrderedDict()
+	   		d['id']          = row[0]
+	   		d['description'] = row[1]
+	   		d['doctor_id']   = row[2]
+
+	   		reviewList.append(d)
+	
+	   doctorData.append({'name': doctor[0][1], 'id': doctor[0][0], 'review': reviewList})
+	   
+	   print (doctorData)
+	   
+	   return jsonify(doctorData)
+		
+
+	if request.method == 'DELETE':
+	   cur = mysql.connection.cursor() 
+	   cur.execute('''DELETE FROM review WHERE doctor_id = %s''', id)
+	   cur.execute('''DELETE FROM doctor WHERE id = %s''', id)
+	   mysql.connection.commit()
+
+	   return "DELETED\n"
+   
+
+@app.route("/doctors/<id>/reviews/", methods = ['GET', 'POST', 'PATCH', 'DELETE'] )
+def addReview(id):
+	if request.method == 'POST':
+		review_data = request.get_json(force=True) 
+		cur = mysql.connection.cursor()	
+		review = review_data["review"]["description"]
+		cur.execute('''INSERT INTO review (review, doctor_id) VALUES (%s, %s)''', (review, id))
+		mysql.connection.commit()
+		returnStatement = "ADDED Review: " + review + " to Doctor of id: " + id + "\n"
+		return returnStatement
+	return "No valid request"
+	
 @app.route("/reviews/")
 
 def getAllReviews():
@@ -102,32 +152,34 @@ def getAllReviews():
     return jsonify(items)
 
 
-@app.route("/doctors/<id>/", methods = ['GET', 'POST', 'PATCH', 'DELETE'] )
-def getDoctorByID(id):
+
+
+@app.route("/doctors/<id>/reviews/<review_id>/", methods = ['GET', 'POST', 'PATCH', 'DELETE'] )
+def getReviewByDoctorID(id, review_id):
 	
-	if request.method == 'GET': 
+	if request.method == 'GET':
+		print ("review")
 		cur = mysql.connection.cursor()
-		cur.execute('''SELECT doctor.id, doctor.name, review.id, review.review, review.doctor_id FROM doctor INNER JOIN review on review.doctor_id = doctor.id where doctor.id = %s''', id)
+		cur.execute('''SELECT doctor.id, doctor.name, review.id, review.review, review.doctor_id FROM doctor INNER JOIN review on review.doctor_id = doctor.id where review.id = %s and doctor.id = %s''', (review_id, id))
 		data = cur.fetchall();
 		print(data)
 		user_list = []
-		reviews = []
+		doctor = []
 		if(len(data) != 0):
 			for row in data :
 				d = collections.OrderedDict()
-				d['id']  			= row[2]
-				d['description']   	= row[3]
-				d['doctor_id']  	= row[4]
-				reviews.append(d)
-			user_list.append({'id': data[0][0], 'name': data[0][1], 'reviews': reviews})
+				d['id']  			= row[0]
+				d['name']   		= row[1]
+				
+				doctor.append(d)
+			user_list.append({'description': data[0][3], 'id': data[0][2], 'doctor': doctor})
 			user_list = user_list[0]
 
 		return jsonify(user_list)
 
 	if request.method == 'DELETE':
 	   cur = mysql.connection.cursor() 
-	   cur.execute('''DELETE FROM review WHERE doctor_id = %s''', id)
-	   cur.execute('''DELETE FROM doctor WHERE id = %s''', id)
+	   cur.execute('''DELETE FROM review WHERE doctor_id = %s and id = %s''', (id, review_id))
 	   mysql.connection.commit()
 
 	   return "DELETED\n"
