@@ -1,0 +1,6 @@
+mysql_host: 'localhost'
+mysql_user: 'root'
+mysql_password: 'dellftw225'
+mysql_db: 'CareDash'
+mysql_port: '3306'
+unix_socket: '/tmp/mysql.sock'
