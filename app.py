@@ -10,7 +10,6 @@ import json
 app = Flask(__name__)
 
 
-
 db = yaml.load(open('db.yaml'))
 app.config['MYSQL_HOST'] = db['mysql_host']
 app.config['MYSQL_USER'] = db['mysql_user']
@@ -211,5 +210,5 @@ def getReviewByID(id):
 	   return "DELETED\n"
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=3000)
 

@@ -23,7 +23,7 @@
 
 > #### Configure db.yaml file
 > 	* Fill out fields
-> 	* replace ``"mysql_host"`` with ``"localhost"`` and ``"mysql_user"`` with ``"root"`` to test locally <br/>
+> 	* replace ``"mysql_host"`` with "localhost" and ``"mysql_user"`` with your username to test locally <br/>
 
 
 
