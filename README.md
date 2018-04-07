@@ -22,7 +22,7 @@
 
 > #### Install modules
 >  ```pip install flask-mysqldb```
->  ```pip install Flask``
+>  ```pip install Flask```
 
 
 > #### Configure db.yaml file
