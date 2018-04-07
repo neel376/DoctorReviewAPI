@@ -2,7 +2,7 @@
 
 ## Introduction
 
-> This is an API for doctor reviews that I worked on for the CareDash API challenge. I did my best to be as specific as possible in the documentation, but if you have any questions, let me know. 
+> This is an API for doctor reviews that I worked on for the CareDash API challenge. If you have any questions, let me know. 
 
 ## Table of Contents:
 * [Getting Setup](#setup)
@@ -19,6 +19,10 @@
 
 > #### Enter the directory
 >  ```cd DoctorReviewAPI```
+
+> #### Install modules
+>  ```pip install flask-mysqldb```
+>  ```pip install Flask``
 
 
 > #### Configure db.yaml file
