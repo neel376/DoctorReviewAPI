@@ -21,7 +21,7 @@
 >  ```cd DoctorReviewAPI```
 
 > #### Install modules
->  ```pip install flask-mysqldb```
+>  ```pip install flask-mysqldb``` <br />
 >  ```pip install Flask```
 
 
