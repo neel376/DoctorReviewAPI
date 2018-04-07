@@ -2,7 +2,7 @@
 
 ## Introduction
 
-> This is an API for doctor reviews that I worked on for the CareDash API challenge. If you have any questions, let me know. 
+> This is an API for doctor reviews that I worked on for the CareDash API challenge. This is my first time using Python/Flask. If you have any questions, please let me know. 
 
 ## Table of Contents:
 * [Getting Setup](#setup)
@@ -41,6 +41,11 @@
 <a name="Comments" />
 
 ## The API
+
+
+### Technologies Used
+>	* Flask <br />
+>	* MySQL <br />
 
 ### Design Considerations
 >	* Separate queries into a file for doctors and a file for doctor reviews. <br />
